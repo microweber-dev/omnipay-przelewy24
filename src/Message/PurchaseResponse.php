@@ -21,7 +21,7 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
 
     public function getToken()
     {
-        return $this->data['token'];
+        return trim($this->data['token']);
     }
 
     /**
