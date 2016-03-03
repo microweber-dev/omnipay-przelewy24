@@ -16,7 +16,16 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
 
     public function getCode()
     {
-        return $this->data['error'];
+        return trim($this->data['error']);
+    }
+
+    public function getMessage()
+    {
+        if (true === $this->isSuccessful()) {
+            return null;
+        }
+
+        return trim($this->data['errorMessage']);
     }
 
     public function getToken()
@@ -29,7 +38,7 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
      */
     public function isRedirect()
     {
-        return true;
+        return $this->isSuccessful() && null !== $this->getToken();
     }
 
     /**

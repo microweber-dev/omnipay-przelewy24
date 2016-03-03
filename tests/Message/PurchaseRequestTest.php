@@ -92,4 +92,16 @@ class PurchaseRequestTest extends TestCase
         $this->assertSame('0', $response->getCode());
         $this->assertNull($response->getMessage());
     }
+
+    public function testSendSignatureFailure()
+    {
+        $this->setMockHttpResponse('PurchaseSignatureFailure.txt');
+        $response = $this->request->send();
+
+        $this->assertInstanceOf('Omnipay\Przelewy24\Message\PurchaseResponse', $response);
+        $this->assertFalse($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertSame('err00', $response->getCode());
+        $this->assertSame('Invalid CRC', $response->getMessage());
+    }
 }
