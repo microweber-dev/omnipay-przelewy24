@@ -5,10 +5,6 @@ namespace Omnipay\Przelewy24\Message;
 use Omnipay\Common\CreditCard;
 use Omnipay\Tests\TestCase;
 
-/**
- * @covers \Omnipay\Przelewy24\Message\PurchaseRequest
- * @group FullCoverage
- */
 class PurchaseRequestTest extends TestCase
 {
     /**
