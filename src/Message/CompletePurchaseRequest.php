@@ -54,7 +54,7 @@ class CompletePurchaseRequest extends AbstractRequest
      */
     public function sendData($data)
     {
-        $httpResponse = $this->sendRequest('POST', '/trnVerify', $data);
+        $httpResponse = $this->sendRequest('POST', 'trnVerify', $data);
 
         $responseData = array();
         parse_str($httpResponse->getBody(), $responseData);
