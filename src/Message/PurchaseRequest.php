@@ -109,7 +109,7 @@ class PurchaseRequest extends AbstractRequest
      */
     public function sendData($data)
     {
-        $httpResponse = $this->sendRequest('POST', '/trnRegister', $data);
+        $httpResponse = $this->sendRequest('POST', 'trnRegister', $data);
 
         $responseData = array();
         parse_str($httpResponse->getBody(), $responseData);
