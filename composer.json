@@ -1,5 +1,5 @@
 {
-  "name": "ticketswap/omnipay-przelewy24",
+  "name": "microweber-dev/omnipay-przelewy24",
   "type": "library",
   "description": "Przelewy24 driver for the Omnipay payment processing library",
   "keywords": [
