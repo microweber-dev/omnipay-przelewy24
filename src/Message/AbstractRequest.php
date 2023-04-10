@@ -3,7 +3,7 @@
 namespace Omnipay\Przelewy24\Message;
 
 use Omnipay\Common\Message\AbstractRequest as BaseAbstractRequest;
-use Guzzle\Common\Event;
+use Psr\Http\Message\ResponseInterface;
 
 abstract class AbstractRequest extends BaseAbstractRequest
 {
@@ -64,6 +64,23 @@ abstract class AbstractRequest extends BaseAbstractRequest
     /**
      * @return string
      */
+    public function getChannel()
+    {
+        return $this->getParameter('channel');
+    }
+
+    /**
+     * @param  string $value
+     * @return $this
+     */
+    public function setChannel($value)
+    {
+        return $this->setParameter('channel', $value);
+    }
+
+    /**
+     * @return string
+     */
     public function getEndpoint()
     {
         return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
@@ -73,25 +90,10 @@ abstract class AbstractRequest extends BaseAbstractRequest
      * @param $method
      * @param $endpoint
      * @param $data
-     * @return \Guzzle\Http\Message\Response
-     * @throws \Guzzle\Common\Exception\InvalidArgumentException
+     * @return ResponseInterface
      */
     protected function sendRequest($method, $endpoint, $data = null)
     {
-        $this->httpClient->getEventDispatcher()->addListener(
-            'request.error',
-            function (Event $event) {
-                /**
-                 * @var \Guzzle\Http\Message\Response $response
-                 */
-                $response = $event['response'];
-
-                if ($response->isError()) {
-                    $event->stopPropagation();
-                }
-            }
-        );
-
         if (null === $data) {
             $data = array();
         }
@@ -99,13 +101,11 @@ abstract class AbstractRequest extends BaseAbstractRequest
         $data['p24_merchant_id'] = $this->getMerchantId();
         $data['p24_pos_id'] = $this->getMerchantId();
 
-        $httpRequest = $this->httpClient->createRequest(
+        return $this->httpClient->request(
             $method,
             $this->getEndpoint() . $endpoint,
-            null,
-            $data
+            array('Content-Type' => 'application/x-www-form-urlencoded'),
+            http_build_query($data, null, '&')
         );
-
-        return $httpRequest->send();
     }
 }

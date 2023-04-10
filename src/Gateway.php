@@ -3,12 +3,19 @@
 namespace Omnipay\Przelewy24;
 
 use Omnipay\Common\AbstractGateway;
+use Omnipay\Przelewy24\Exception\NonValidChannelException;
 
 /**
  * Przelewy24 Gateway
  */
 class Gateway extends AbstractGateway
 {
+    const P24_CHANNEL_CC = 1;
+    const P24_CHANNEL_BANK_TRANSFERS = 2;
+    const P24_CHANNEL_MANUAL_TRANSFER = 4;
+    const P24_CHANNEL_ALL_METHODS_24_7 = 16;
+    const P24_CHANNEL_USE_PREPAYMENT = 32;
+    const P24_CHANNEL_ALL = 63;
     /**
      * Get gateway display name
      *
@@ -81,6 +88,24 @@ class Gateway extends AbstractGateway
     public function setCrc($value)
     {
         return $this->setParameter('crc', $value);
+    }
+
+    /**
+     * @return string
+     */
+    public function getChannel()
+    {
+        return $this->getParameter('channel');
+    }
+
+    /**
+     * @param  int $value
+     * @return $this
+     * @throws NonValidChannelException
+     */
+    public function setChannel($value)
+    {
+        return $this->setParameter('channel', $value);
     }
 
     /**

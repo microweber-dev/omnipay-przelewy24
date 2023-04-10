@@ -1,5 +1,5 @@
 {
-  "name": "microweber-dev/omnipay-przelewy24",
+  "name": "ticketswap/omnipay-przelewy24",
   "type": "library",
   "description": "Przelewy24 driver for the Omnipay payment processing library",
   "keywords": [
@@ -23,10 +23,10 @@
     "psr-4": { "Omnipay\\Przelewy24\\" : "src/" }
   },
   "require": {
-    "omnipay/common": "*"
+    "omnipay/common": "^3"
   },
   "require-dev": {
-    "omnipay/tests": "*"
+    "omnipay/tests": "^3"
   },
   "scripts": {
     "test": "phpunit"
